@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { getAllPosts, addPostToPosts, editPostToPosts } from "./API";
+import { getAllPosts, addPostToPosts, editPostToPosts, deletePostFromPosts } from "./API";
 import Post from './components/Post/Post'
 
 function App() {
@@ -23,10 +23,20 @@ function App() {
     setPosts(newPosts);
   }
 
+  const handleDeletePostButton = async (id, author, text) => {
+
+    await deletePostFromPosts(id, author, text);
+    const newPosts = await getAllPosts();
+
+    setPosts(newPosts);
+  }
+
   const handleGetAllPosts = async () => {
     const posts = await getAllPosts();
     setPosts(posts);
   }
+
+
 
   return (
     <div className="App">
@@ -40,7 +50,12 @@ function App() {
       {console.log(posts)}
 
       {posts && posts.map(post =>
-        <Post key={post.id} post={post} handleEditPostButton={handleEditPostButton}></Post>
+        <Post
+          key={post.id}
+          post={post}
+          handleEditPostButton={handleEditPostButton}
+          handleDeletePostButton={handleDeletePostButton}>
+        </Post>
       )}
     </div>
   );

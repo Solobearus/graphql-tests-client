@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Post.css'
 
 
-const Post = ({ post, handleEditPostButton }) => {
+const Post = ({ post, handleEditPostButton, handleDeletePostButton }) => {
     const [authorInput, setAuthorInput] = useState(post.author);
     const [textInput, setTextInput] = useState(post.text);
     const [editing, setediting] = useState(false)
@@ -18,7 +18,7 @@ const Post = ({ post, handleEditPostButton }) => {
                         <input type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} />
                         <button onClick={e => {
                             {
-                                
+
                                 handleEditPostButton(post.id, authorInput, textInput)
                             }
                         }}>confirm</button>
@@ -29,6 +29,7 @@ const Post = ({ post, handleEditPostButton }) => {
                         {`id: ${post.id} --
                         author: ${post.author} --
                         text: ${post.text} `}
+                        <button onClick={e => { handleDeletePostButton(post.id) }}>delete</button>
                         <button onClick={e => { setediting(true) }}>edit</button>
                     </>
             }
