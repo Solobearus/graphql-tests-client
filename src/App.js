@@ -1,40 +1,46 @@
 import React, { useState } from 'react';
 import './App.css';
-import { getAllData, addItemToData } from "./API";
+import { getAllPosts, addPostToPosts, editPostToPosts } from "./API";
+import Post from './components/Post/Post'
+
 function App() {
-  const [data, setData] = useState([]);
-  const [textInput, setTextInput] = useState('initialState');
+  const [posts, setPosts] = useState([]);
+  const [authorInput, setAuthorInput] = useState('testauthor')
+  const [textInput, setTextInput] = useState('testtext');
 
-  const handleAddItemButton = async () => {
+  const handleAddPostButton = async () => {
+    await addPostToPosts(authorInput, textInput);
+    const newPosts = await getAllPosts();
 
-    await addItemToData(textInput);
-    const newData = await getAllData();
-    console.log(newData);
-
-    setData(newData);
+    setPosts(newPosts);
   }
 
-  const handleGetAllData = async () => {
-    const data = await getAllData();
-    setData(data);
+  const handleEditPostButton = async (id, author, text) => {
+
+    await editPostToPosts(id, author, text);
+    const newPosts = await getAllPosts();
+
+    setPosts(newPosts);
+  }
+
+  const handleGetAllPosts = async () => {
+    const posts = await getAllPosts();
+    setPosts(posts);
   }
 
   return (
     <div className="App">
 
+      <input type="text" value={authorInput} onChange={(e) => setAuthorInput(e.target.value)} />
       <input type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} />
-      <button onClick={e => { handleGetAllData() }}>getAllData</button>
+      <button onClick={e => { handleGetAllPosts() }}>getAllPosts</button>
 
-      <button onClick={e => { handleAddItemButton() }}>addItem</button>
+      <button onClick={e => { handleAddPostButton() }}>addPost</button>
 
-      {console.log(data)}
+      {console.log(posts)}
 
-      {data && data.map(item =>
-        <div key={item.id}>
-          {`id: ${item.id} --
-          author: ${item.author} --
-          text: ${item.text} `}
-        </div>
+      {posts && posts.map(post =>
+        <Post post={post} handleEditPostButton={handleEditPostButton}></Post>
       )}
     </div>
   );

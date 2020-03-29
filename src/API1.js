@@ -4,7 +4,7 @@ import { serverURL } from './config'
 
 export const getAllPosts = () => {
     const query = `{
-            getPosts
+            getPosts(id:ID!)
         }`
 
     return fetch(`${serverURL}/graphql`, {
@@ -26,7 +26,7 @@ export const getAllPosts = () => {
 
 
 export const addPostToPosts = (author, text) => {
-    var query = `mutation addPost($input: PostInput) {
+    var query = `mutation createMessage($input: PostInput) {
         addPost(input: $input)
     }`;
 
