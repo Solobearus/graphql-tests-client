@@ -10,7 +10,7 @@ const Post = ({ post, handleEditPostButton }) => {
 
 
     return (
-        < div className="post" data-testid="post" key={post.id}>
+        < div className="post" data-testid="post" >
             {
                 editing ?
                     <>

@@ -40,7 +40,7 @@ function App() {
       {console.log(posts)}
 
       {posts && posts.map(post =>
-        <Post post={post} handleEditPostButton={handleEditPostButton}></Post>
+        <Post key={post.id} post={post} handleEditPostButton={handleEditPostButton}></Post>
       )}
     </div>
   );

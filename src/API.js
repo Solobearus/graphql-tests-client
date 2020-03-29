@@ -47,6 +47,7 @@ export const addPostToPosts = (author, text) => {
 
 
 export const editPostToPosts = (id, author, text) => {
+    console.log({ id });
     console.log({ author });
     console.log({ text });
 
